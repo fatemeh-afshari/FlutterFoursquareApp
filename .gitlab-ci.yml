@@ -1,0 +1,18 @@
+image: cirrusci/flutter:stable
+
+before_script:
+  - flutter pub get
+
+stages:
+  - build
+
+build-job:
+  stage: build
+  script:
+    - flutter analyze
+    # release build for master and debug for others
+    - flutter build apk --release
+    - cp build/app/outputs/flutter-apk/app-release.apk app-release.apk
+  artifacts:
+    paths:
+      - app-release.apk
